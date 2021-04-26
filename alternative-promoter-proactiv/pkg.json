@@ -1,0 +1,27 @@
+{
+    "name": "alternative-promoter-proactiv",
+    "version": "0.1.0",
+    "description": "proActiv workflow",
+    "main": "main.nf",
+    "deprecated": false,
+    "keywords": [
+        "bioinformatics",
+        "rna-seq",
+        "alternative promoters"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/icgc-argo-rna-wg/alternative-promoter-analysis.git"
+    },
+    "dependencies": [],
+    "devDependencies": [],
+    "contributors": [
+        {
+            "name": "Yuk Kei Wan",
+            "email": "ywan6@alumni.jh.edu"
+        }
+    ],
+    "license": "MIT",
+    "bugReport": "https://github.com/icgc-argo-rna-wg/alternative-promoter-analysis/issues",
+    "homepage": "https://github.com/icgc-argo-rna-wg/alternative-promoter-analysis#readme"
+}
