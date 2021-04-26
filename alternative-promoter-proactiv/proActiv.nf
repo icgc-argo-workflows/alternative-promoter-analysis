@@ -29,7 +29,7 @@ nextflow.enable.dsl = 2
 version = '0.1.0'  // package version
 
 // universal params go here, change default value as needed
-params.container = ""
+params.container = "quay.io/biocontainers/bioconductor-proactiv:1.0.0--r40_1"
 params.container_registry = ""
 params.container_version = ""
 params.cpus = 1
@@ -38,25 +38,29 @@ params.publish_dir = ""  // set to empty string will disable publishDir
 
 // tool specific parmas go here, add / change as needed
 params.input_file = ""
-params.cleanup = true
-
-include { demoCopyFile } from "./local_modules/demo-copy-file"
-
-
 
 // please update workflow code as needed
-workflow AlternativePromoterProactiv {
-  take:  // update as needed
-    input_file
+process AlternativePromoterProactiv {
+  container "${params.container ?: container[params.container_registry ?: default_container_registry]}:${params.container_version ?: version}"
+  publishDir "${params.publish_dir}/${task.process.replaceAll(':', '_')}", mode: "copy", enabled: params.publish_dir
 
+  cpus params.cpus
+  memory "${params.mem} GB"
 
-  main:  // update as needed
-    demoCopyFile(input_file)
+  input:
+  path samplesheet
+    
+  output:    
+  path "*.csv"                , emit: proactiv_csv
+  path "proactiv.version.txt" , emit: proactiv_version
+  path "r.version.txt"        , emit: r_version
 
-
-  emit:  // update as needed
-    output_file = demoCopyFile.out.output_file
-
+  script:
+  """
+  proActiv.r --samplesheet=$samplesheet
+  Rscript -e "library(proActiv); write(x=as.character(packageVersion('proActiv')), file='proactiv.version.txt')"
+  echo \$(R --version 2>&1) > r.version.txt
+  """
 }
 
 
