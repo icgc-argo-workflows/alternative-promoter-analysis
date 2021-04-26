@@ -1,8 +1,7 @@
 {
-    "input_file": "input/test_rg_3.bam",
-    "expected_output": "expected/expected.test_rg_3.bam",
     "publish_dir": "outdir",
-    "cleanup": true,
+    "input_file":"input/samplesheet_proActiv.csv",
     "cpus": 1,
-    "mem": 0.5
+    "mem": 0.5,
+    "expected_output": "expected/expected_proActiv_count.csv"
 }

@@ -40,8 +40,8 @@ params.publish_dir = ""  // set to empty string will disable publishDir
 params.input_file = ""
 
 // please update workflow code as needed
-process AlternativePromoterProactiv {
-  container "${params.container ?: container[params.container_registry ?: default_container_registry]}:${params.container_version ?: version}"
+process icgcArgoRnaSeqAlternativePromoterProactiv {
+  container "quay.io/biocontainers/bioconductor-proactiv:1.0.0--r40_1"
   publishDir "${params.publish_dir}/${task.process.replaceAll(':', '_')}", mode: "copy", enabled: params.publish_dir
 
   cpus params.cpus
@@ -57,7 +57,7 @@ process AlternativePromoterProactiv {
 
   script:
   """
-  proActiv.r --samplesheet=$samplesheet
+  ${PWD}/../proActiv.r --samplesheet=$samplesheet
   Rscript -e "library(proActiv); write(x=as.character(packageVersion('proActiv')), file='proactiv.version.txt')"
   echo \$(R --version 2>&1) > r.version.txt
   """
@@ -67,7 +67,7 @@ process AlternativePromoterProactiv {
 // this provides an entry point for this main script, so it can be run directly without clone the repo
 // using this command: nextflow run <git_acc>/<repo>/<pkg_name>/<main_script>.nf -r <pkg_name>.v<pkg_version> --params-file xxx
 workflow {
-  AlternativePromoterProactiv(
+  icgcArgoRnaSeqAlternativePromoterProactiv(
     file(params.input_file)
   )
 }

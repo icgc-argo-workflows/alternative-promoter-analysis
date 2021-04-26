@@ -35,21 +35,14 @@ version = '0.1.0'  // package version
 
 // universal params
 params.publish_dir = ""
-params.container = ""
-params.container_registry = ""
-params.container_version = ""
 
 // tool specific parmas go here, add / change as needed
 params.input_file = ""
-params.expected_output = ""
-params.cleanup = false
+params.expected_output = "tests/expected/expected_proActiv_count.csv"
 
-include { AlternativePromoterProactiv } from '../main'
-// include section starts
-// include section ends
+include { icgcArgoRnaSeqAlternativePromoterProactiv } from '../proActiv'
 
-
-process file_smart_diff {
+process diff_count_csv {
   input:
     path output_file
     path expected_file
@@ -59,18 +52,8 @@ process file_smart_diff {
 
   script:
     """
-    # Note: this is only for demo purpose, please write your own 'diff' according to your own needs.
-    # in this example, we need to remove date field before comparison eg, <div id="header_filename">Tue 19 Jan 2021<br/>test_rg_3.bam</div>
-    # sed -e 's#"header_filename">.*<br/>test_rg_3.bam#"header_filename"><br/>test_rg_3.bam</div>#'
-
-    cat ${output_file} \
-      | sed -e 's#"header_filename">.*<br/>#"header_filename"><br/>#' > normalized_output
-
-    ([[ '${expected_file}' == *.gz ]] && gunzip -c ${expected_file} || cat ${expected_file}) \
-      | sed -e 's#"header_filename">.*<br/>#"header_filename"><br/>#' > normalized_expected
-
-    diff normalized_output normalized_expected \
-      && ( echo "Test PASSED" && exit 0 ) || ( echo "Test FAILED, output file mismatch." && exit 1 )
+    diff <(sort ${output_file}) <(sort ${expected_file}) \
+      && ( echo "Test PASSED" && exit 0 ) || ( echo "Test FAILED, proActiv output csv files mismatch." && exit 1 )
     """
 }
 
@@ -81,12 +64,12 @@ workflow checker {
     expected_output
 
   main:
-    AlternativePromoterProactiv(
+    icgcArgoRnaSeqAlternativePromoterProactiv(
       input_file
     )
 
-    file_smart_diff(
-      AlternativePromoterProactiv.out.output_file,
+    diff_count_csv(
+      icgcArgoRnaSeqAlternativePromoterProactiv.out.proactiv_csv,
       expected_output
     )
 }
