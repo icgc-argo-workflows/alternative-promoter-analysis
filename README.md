@@ -1,3 +1,3 @@
 # Alternative Promoter analysis packages
 
-Update this to describe your awesome project.
+This repository collects the tool packages used for Alternative Promoter analysis in the context of the ICGC ARGO project.
