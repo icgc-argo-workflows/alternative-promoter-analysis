@@ -25,11 +25,20 @@
     Yuk Kei Wan
 */
 
+/********************************************************************/
+/* this block is auto-generated based on info from pkg.json where   */
+/* changes can be made if needed, do NOT modify this block manually */
 nextflow.enable.dsl = 2
 version = '0.1.0'  // package version
 
+container = [
+    'ghcr.io': 'ghcr.io/icgc-argo-rna-wg/alternative-promoter-analysis.alternative-promoter-proactiv'
+]
+default_container_registry = 'ghcr.io'
+/********************************************************************/
+
 // universal params go here, change default value as needed
-params.container = "quay.io/biocontainers/bioconductor-proactiv:1.0.0--r40_1"
+params.container = ""
 params.container_registry = ""
 params.container_version = ""
 params.cpus = 1
@@ -41,7 +50,7 @@ params.input_file = ""
 
 // please update workflow code as needed
 process icgcArgoRnaSeqAlternativePromoterProactiv {
-  container "quay.io/biocontainers/bioconductor-proactiv:1.0.0--r40_1"
+  container "${params.container ?: container[params.container_registry ?: default_container_registry]}:${params.container_version ?: version}"
   publishDir "${params.publish_dir}/${task.process.replaceAll(':', '_')}", mode: "copy", enabled: params.publish_dir
 
   cpus params.cpus
