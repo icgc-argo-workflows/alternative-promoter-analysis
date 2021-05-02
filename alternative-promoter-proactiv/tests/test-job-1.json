@@ -1,6 +1,7 @@
 {
     "publish_dir": "outdir",
     "input_file":"input/samplesheet_proActiv.csv",
+    "container_registry": "ghcr.io",
     "cpus": 1,
     "mem": 0.5,
     "expected_output": "expected/expected_proActiv_count.csv"
