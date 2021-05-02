@@ -41,7 +41,7 @@ params.input_file = ""
 
 // please update workflow code as needed
 process icgcArgoRnaSeqAlternativePromoterProactiv {
-  container "quay.io/biocontainers/bioconductor-proactiv:1.0.0--r40_1"
+  container "docker.io/yuukiiwa/proactiv:test"
   publishDir "${params.publish_dir}/${task.process.replaceAll(':', '_')}", mode: "copy", enabled: params.publish_dir
 
   cpus params.cpus
