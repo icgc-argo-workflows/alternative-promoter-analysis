@@ -2,7 +2,7 @@
     "name": "alternative-promoter-proactiv",
     "version": "0.1.0",
     "description": "proActiv workflow",
-    "main": "main.nf",
+    "main": "proActiv.nf",
     "deprecated": false,
     "keywords": [
         "bioinformatics",
