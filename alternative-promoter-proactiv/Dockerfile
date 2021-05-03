@@ -25,3 +25,7 @@ sudo
 # Install plr -- for now (?) from GH; also install visualTest
 RUN installGithub.r Goekelab/proActiv \
 && rm -rf /tmp/downloaded_packages/
+
+# make proActiv script available inside container
+RUN mkdir -p /tools
+COPY proActiv.r /tools 

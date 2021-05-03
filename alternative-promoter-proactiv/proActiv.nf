@@ -66,7 +66,7 @@ process icgcArgoRnaSeqAlternativePromoterProactiv {
 
   script:
   """
-  ${PWD}/../proActiv.r --samplesheet=$samplesheet
+  /tools/proActiv.r --samplesheet=$samplesheet
   Rscript -e "library(proActiv); write(x=as.character(packageVersion('proActiv')), file='proactiv.version.txt')"
   echo \$(R --version 2>&1) > r.version.txt
   """
