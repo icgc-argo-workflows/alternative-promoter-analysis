@@ -1,6 +1,7 @@
 {
     "publish_dir": "outdir",
     "input_file":"input/samplesheet_proActiv.csv",
+    "gtf":"input/gencode.v34.annotation.subset.gtf.gz",
     "container_registry": "ghcr.io",
     "cpus": 1,
     "mem": 0.5,
