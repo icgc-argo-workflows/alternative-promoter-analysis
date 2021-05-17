@@ -47,7 +47,7 @@ params.publish_dir = ""  // set to empty string will disable publishDir
 
 // tool specific parmas go here, add / change as needed
 params.input_file = ""
-params.gtf        = ""
+params.annotation = ""
 
 // please update workflow code as needed
 process icgcArgoRnaSeqAlternativePromoterProactiv {
@@ -59,7 +59,7 @@ process icgcArgoRnaSeqAlternativePromoterProactiv {
 
   input:
   path samplesheet
-  path gtf
+  path annotation
 
   output:    
   path "*.csv"                , emit: proactiv_csv
@@ -68,7 +68,7 @@ process icgcArgoRnaSeqAlternativePromoterProactiv {
 
   script:
   """
-  /tools/proActiv.r --samplesheet=$samplesheet --annotation=$gtf
+  /tools/proActiv.r --samplesheet=$samplesheet --annotation=$annotation
   Rscript -e "library(proActiv); write(x=as.character(packageVersion('proActiv')), file='proactiv.version.txt')"
   echo \$(R --version 2>&1) > r.version.txt
   """
@@ -80,6 +80,6 @@ process icgcArgoRnaSeqAlternativePromoterProactiv {
 workflow {
   icgcArgoRnaSeqAlternativePromoterProactiv(
     file(params.input_file),
-    file(params.gtf)
+    file(params.annotation)
   )
 }

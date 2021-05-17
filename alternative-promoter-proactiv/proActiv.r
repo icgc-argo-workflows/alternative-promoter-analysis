@@ -26,7 +26,7 @@ library(proActiv)
 args = commandArgs(trailingOnly=TRUE)
 
 samplesheet   <- strsplit(grep('--samplesheet*', args, value = TRUE), split = '=')[[1]][[2]]
-gtf.file      <- strsplit(grep('--annotation*', args, value = TRUE), split = '=')[[1]][[2]]
+annotation    <- strsplit(grep('--annotation*', args, value = TRUE), split = '=')[[1]][[2]]
 
 ################################################
 ################################################
@@ -36,8 +36,7 @@ gtf.file      <- strsplit(grep('--annotation*', args, value = TRUE), split = '='
 sample_tab <- read.csv(samplesheet,header=TRUE)
 files <- sample_tab$input_file
 condition <- sample_tab$condition
-promoterAnnotation <- preparePromoterAnnotation(file = gtf.file,
-                                                species = 'Homo_sapiens')
+promoterAnnotation <- readRDS(annotation)
 result <- proActiv(files = files, condition = condition,
                    promoterAnnotation = promoterAnnotation)
 result <- result[complete.cases(assays(result)$promoterCounts),]
