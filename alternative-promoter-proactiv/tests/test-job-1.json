@@ -1,7 +1,7 @@
 {
     "publish_dir": "outdir",
     "input_file":"input/samplesheet_proActiv.csv",
-    "annotation":"input/gencode.v38.primary_assembly.annotation.rds",
+    "annotation":"input/gencode.v34.annotation.gtf.chr1.subset.annotation.rds",
     "container_registry": "ghcr.io",
     "cpus": 1,
     "mem": 0.5,
