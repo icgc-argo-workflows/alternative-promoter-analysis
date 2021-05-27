@@ -46,8 +46,8 @@ params.mem = 1  // GB
 params.publish_dir = ""  // set to empty string will disable publishDir
 
 // tool specific parmas go here, add / change as needed
-params.input_file = ""
-params.annotation = ""
+params.junction_file = ""
+params.annotation    = ""
 
 // please update workflow code as needed
 process icgcArgoRnaSeqAlternativePromoterProactiv {
@@ -58,8 +58,8 @@ process icgcArgoRnaSeqAlternativePromoterProactiv {
   memory "${params.mem} GB"
 
   input:
-  path samplesheet
-  path annotation
+  path junction_file
+  path premade_annotation_rds
 
   output:    
   path "*.csv"                , emit: proactiv_csv
@@ -68,7 +68,7 @@ process icgcArgoRnaSeqAlternativePromoterProactiv {
 
   script:
   """
-  /tools/proActiv.r --samplesheet=$samplesheet --annotation=$annotation
+  /tools/proActiv.r --junction_file=$junction_file --annotation=$premade_annotation_rds
   Rscript -e "library(proActiv); write(x=as.character(packageVersion('proActiv')), file='proactiv.version.txt')"
   echo \$(R --version 2>&1) > r.version.txt
   """
@@ -79,7 +79,7 @@ process icgcArgoRnaSeqAlternativePromoterProactiv {
 // using this command: nextflow run <git_acc>/<repo>/<pkg_name>/<main_script>.nf -r <pkg_name>.v<pkg_version> --params-file xxx
 workflow {
   icgcArgoRnaSeqAlternativePromoterProactiv(
-    file(params.input_file),
+    file(params.junction_file),
     file(params.annotation)
   )
 }
