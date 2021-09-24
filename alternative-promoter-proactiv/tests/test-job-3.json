@@ -2,6 +2,7 @@
     "publish_dir": "outdir",
     "input_file":"input/SJ_inputs_from_proActiv/SGNEx_HepG2_Illumina_replicate2-run1.subset.SJ.out.tab",
     "annotation":"input/premade_promoter_annotation/gencode.v34.annotation.gtf.chr1.subset.annotation.rds",
+    "condition":"HepG2",
     "container_registry": "ghcr.io",
     "cpus": 1,
     "mem": 0.5,

@@ -47,18 +47,22 @@ params.publish_dir = ""  // set to empty string will disable publishDir
 
 // tool specific parmas go here, add / change as needed
 params.junction_file = ""
+params.condition     = ""
 params.annotation    = ""
 
 // please update workflow code as needed
 process icgcArgoRnaSeqAlternativePromoterProactiv {
   container "${params.container ?: container[params.container_registry ?: default_container_registry]}:${params.container_version ?: version}"
-  publishDir "${params.publish_dir}/${task.process.replaceAll(':', '_')}", mode: "copy", enabled: params.publish_dir
+//  container "docker.io/yuukiiwa/proactiv:0.1"
+//  publishDir "${params.publish_dir}/${task.process.replaceAll(':', '_')}", mode: "copy", enabled: params.publish_dir
+  publishDir "${params.publish_dir}/${task.process.replaceAll(':', '_')}/${params.condition}", mode: "copy", enabled: params.publish_dir
 
   cpus params.cpus
   memory "${params.mem} GB"
 
   input:
   path junction_file
+  val  condition
   path premade_annotation_rds
 
   output:    
@@ -68,7 +72,7 @@ process icgcArgoRnaSeqAlternativePromoterProactiv {
 
   script:
   """
-  /tools/proActiv.r --junction_file=$junction_file --annotation=$premade_annotation_rds
+  /tools/proActiv.r --junction_file=$junction_file --condition=$condition --annotation=$premade_annotation_rds
   Rscript -e "library(proActiv); write(x=as.character(packageVersion('proActiv')), file='proactiv.version.txt')"
   echo \$(R --version 2>&1) > r.version.txt
   """
@@ -80,6 +84,7 @@ process icgcArgoRnaSeqAlternativePromoterProactiv {
 workflow {
   icgcArgoRnaSeqAlternativePromoterProactiv(
     file(params.junction_file),
+    params.condition,
     file(params.annotation)
   )
 }

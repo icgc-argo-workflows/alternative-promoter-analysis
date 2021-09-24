@@ -37,9 +37,10 @@ version = '0.1.0'  // package version
 params.publish_dir = ""
 
 // tool specific parmas go here, add / change as needed
-params.input_file = ""
-params.annotation = ""
-params.expected_output = "tests/expected/expected_proActiv_count.csv"
+params.junction_file   = ""
+params.condition       = ""
+params.annotation      = ""
+params.expected_output = ""
 
 include { icgcArgoRnaSeqAlternativePromoterProactiv } from '../proActiv'
 
@@ -61,13 +62,15 @@ process diff_count_csv {
 
 workflow checker {
   take:
-    input_file
+    junction_file
+    condition
     annotation
     expected_output
 
   main:
     icgcArgoRnaSeqAlternativePromoterProactiv(
-      input_file,
+      junction_file,
+      condition,
       annotation
     )
 
@@ -80,7 +83,8 @@ workflow checker {
 
 workflow {
   checker(
-    file(params.input_file),
+    file(params.junction_file),
+    params.condition,
     file(params.annotation),
     file(params.expected_output)
   )
