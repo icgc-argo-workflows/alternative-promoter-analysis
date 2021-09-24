@@ -6,5 +6,5 @@
     "container_registry": "ghcr.io",
     "cpus": 1,
     "mem": 0.5,
-    "expected_output": "expected/SGNEx_A549_Illumina_replicate3-run1_proActiv_count.csv"
+    "expected_output": "expected/expected_SGNEx_A549_Illumina_replicate3-run1_proActiv_count.csv"
 }
