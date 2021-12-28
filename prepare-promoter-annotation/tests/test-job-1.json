@@ -1,6 +1,6 @@
 {
-    "input_file": "input/test_rg_3.bam",
-    "expected_output": "expected/expected.test_rg_3.bam",
+    "input_file": "input/gencode.v34.annotation.subset.gtf.gz",
+    "expected_output": "expected/promoterAnnotation.rds",
     "publish_dir": "outdir",
     "cpus": 1,
     "mem": 0.5

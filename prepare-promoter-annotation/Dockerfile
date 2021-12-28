@@ -4,7 +4,7 @@ LABEL org.opencontainers.image.source https://github.com/icgc-argo-rna-wg/altern
 
 ENV PATH="/tools:${PATH}"
 
-COPY *.py /tools/
+COPY preparePromoterAnnotation.r /tools/
 
 ENTRYPOINT ["/usr/bin/env"]
 

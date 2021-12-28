@@ -48,10 +48,10 @@ params.container_version = ""
 params.container = ""
 
 // tool specific parmas go here, add / change as needed
-params.input_file = ""
+params.gtf = ""
 params.expected_output = ""
 
-include { preparePromoterAnnotation } from '../main'
+include { preparePromoterAnnotation } from '../preparePromoterAnnotation'
 
 
 process file_smart_diff {
@@ -84,24 +84,24 @@ process file_smart_diff {
 
 workflow checker {
   take:
-    input_file
+    gtf
     expected_output
 
   main:
     preparePromoterAnnotation(
-      input_file
+      gtf
     )
 
-    file_smart_diff(
-      preparePromoterAnnotation.out.output_file,
-      expected_output
-    )
+//    file_smart_diff(
+//      preparePromoterAnnotation.out.promoter_annotation_rds,
+//      expected_output
+//    )
 }
 
 
 workflow {
   checker(
-    file(params.input_file),
+    file(params.gtf),
     file(params.expected_output)
   )
 }

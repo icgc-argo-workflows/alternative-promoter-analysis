@@ -2,7 +2,7 @@
     "name": "prepare-promoter-annotation",
     "version": "0.1.0",
     "description": "prepare annotation.rds for proActiv",
-    "main": "main.nf",
+    "main": "preparePromoterAnnotation.nf",
     "deprecated": false,
     "keywords": [
         "bioinformatics",
