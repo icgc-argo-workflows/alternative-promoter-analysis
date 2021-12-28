@@ -50,7 +50,7 @@ params.publish_dir = ""  // set to empty string will disable publishDir
 
 // tool specific parmas go here, add / change as needed
 params.gtf = ""
-
+params.output_tag = ""
 
 process preparePromoterAnnotation {
   container "${params.container ?: container[params.container_registry ?: default_container_registry]}:${params.container_version ?: version}"
@@ -61,13 +61,14 @@ process preparePromoterAnnotation {
 
   input:
   path gtf
+  path output_tag
 
   output:
   path "*.rds", emit: promoter_annotation_rds
 
   script:
   """
-  /tools/preparePromoterAnnotation.r --gtf=$gtf
+  /tools/preparePromoterAnnotation.r --gtf=$gtf --output_tag=$output_tag
   """
 }
 
@@ -76,6 +77,7 @@ process preparePromoterAnnotation {
 // using this command: nextflow run <git_acc>/<repo>/<pkg_name>/<main_script>.nf -r <pkg_name>.v<pkg_version> --params-file xxx
 workflow {
   preparePromoterAnnotation(
-    file(params.gtf)
+    file(params.gtf),
+    params.output_tag
   )
 }

@@ -24,6 +24,7 @@ library(proActiv)
 args = commandArgs(trailingOnly=TRUE)
 
 gtf.file      <- strsplit(grep('--gtf*', args, value = TRUE), split = '=')[[1]][[2]]
+output.tag    <- strsplit(grep('--output_tag*', args, value = TRUE), split = '=')[[1]][[2]]
 
 ################################################
 ################################################
@@ -32,4 +33,4 @@ gtf.file      <- strsplit(grep('--gtf*', args, value = TRUE), split = '=')[[1]][
 ################################################
 promoterAnnotation <- preparePromoterAnnotation(file = gtf.file,
                                                 species = 'Homo_sapiens')
-saveRDS(promoterAnnotation, file = 'promoterAnnotation.rds')
+saveRDS(promoterAnnotation, file = paste0(output.tag,'.rds'))
