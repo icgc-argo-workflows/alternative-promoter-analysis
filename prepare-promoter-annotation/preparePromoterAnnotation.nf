@@ -61,7 +61,7 @@ process preparePromoterAnnotation {
 
   input:
   path gtf
-  path output_tag
+  val output_tag
 
   output:
   path "*.rds", emit: promoter_annotation_rds
