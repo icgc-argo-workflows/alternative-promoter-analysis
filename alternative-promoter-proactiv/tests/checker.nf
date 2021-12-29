@@ -42,7 +42,7 @@ params.condition       = ""
 params.annotation      = ""
 params.expected_output = ""
 
-include { icgcArgoRnaSeqAlternativePromoterProactiv } from '../proActiv'
+include { proActiv } from '../proActiv'
 
 process diff_count_csv {
   input:
@@ -68,14 +68,14 @@ workflow checker {
     expected_output
 
   main:
-    icgcArgoRnaSeqAlternativePromoterProactiv(
+    proActiv(
       junction_file,
       condition,
       annotation
     )
 
     diff_count_csv(
-      icgcArgoRnaSeqAlternativePromoterProactiv.out.proactiv_csv,
+      proActiv.out.proactiv_csv,
       expected_output
     )
 }

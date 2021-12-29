@@ -51,7 +51,7 @@ params.condition     = ""
 params.annotation    = ""
 
 // please update workflow code as needed
-process icgcArgoRnaSeqAlternativePromoterProactiv {
+process proActiv {
   container "${params.container ?: container[params.container_registry ?: default_container_registry]}:${params.container_version ?: version}"
 //  container "docker.io/yuukiiwa/proactiv:0.1"
 //  publishDir "${params.publish_dir}/${task.process.replaceAll(':', '_')}", mode: "copy", enabled: params.publish_dir
@@ -82,7 +82,7 @@ process icgcArgoRnaSeqAlternativePromoterProactiv {
 // this provides an entry point for this main script, so it can be run directly without clone the repo
 // using this command: nextflow run <git_acc>/<repo>/<pkg_name>/<main_script>.nf -r <pkg_name>.v<pkg_version> --params-file xxx
 workflow {
-  icgcArgoRnaSeqAlternativePromoterProactiv(
+  proActiv(
     file(params.junction_file),
     params.condition,
     file(params.annotation)
