@@ -1,7 +1,7 @@
 {
     "gtf": "input/gencode.v34.annotation.subset.gtf.gz",
     "output_tag": "gencode.v34.annotation.subset",
-    "expected_output": "expected/gencode.v34.annotation.subset.rds",
+    "expected_output": "expected/expected_gencode.v34.annotation.subset.rds",
     "publish_dir": "outdir",
     "cpus": 1,
     "mem": 2
