@@ -5,6 +5,6 @@
     "condition":"HepG2",
     "container_registry": "ghcr.io",
     "cpus": 1,
-    "mem": 0.5,
+    "mem": 2,
     "expected_output": "expected/expected_SGNEx_HepG2_Illumina_replicate4-run1_proActiv_count.csv"
 }

@@ -5,6 +5,6 @@
     "condition":"A549",
     "container_registry": "ghcr.io",
     "cpus": 1,
-    "mem": 0.5,
+    "mem": 2,
     "expected_output": "expected/expected_SGNEx_A549_Illumina_replicate1-run1_proActiv_count.csv"
 }
