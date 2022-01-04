@@ -37,7 +37,7 @@ nextflow.enable.dsl = 2
 version = '0.1.0'  // package version
 
 container = [
-    'ghcr.io': 'ghcr.io/icgc-argo-rna-wg/alternative-promoter-analysis.prepare-promoter-annotation'
+    'ghcr.io': 'ghcr.io/icgc-argo-workflows/alternative-promoter-analysis.prepare-promoter-annotation'
 ]
 default_container_registry = 'ghcr.io'
 /********************************************************************/
