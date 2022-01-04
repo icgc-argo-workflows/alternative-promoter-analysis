@@ -4,5 +4,5 @@
     "expected_output": "expected/gencode.v34.annotation.subset.rds",
     "publish_dir": "outdir",
     "cpus": 1,
-    "mem": 0.5
+    "mem": 2
 }
