@@ -53,9 +53,7 @@ params.annotation    = ""
 // please update workflow code as needed
 process proActiv {
   container "${params.container ?: container[params.container_registry ?: default_container_registry]}:${params.container_version ?: version}"
-//  container "docker.io/yuukiiwa/proactiv:0.1"
-//  publishDir "${params.publish_dir}/${task.process.replaceAll(':', '_')}", mode: "copy", enabled: params.publish_dir
-  publishDir "${params.publish_dir}/${task.process.replaceAll(':', '_')}/${params.condition}", mode: "copy", enabled: params.publish_dir
+  publishDir "${params.publish_dir}/${task.process.replaceAll(':', '_')}/$condition", mode: "copy", enabled: params.publish_dir
 
   cpus params.cpus
   memory "${params.mem} GB"

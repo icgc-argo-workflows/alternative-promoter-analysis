@@ -44,6 +44,8 @@ str(result_tab)
 result_tab$txId <- sapply(result_tab$txId,paste,collapse=";")
 countData <- data.frame(result_tab, assays(result)$promoterCounts)
 sampleName <- strsplit(junction_file, split = '\\.')[[1]][1]
+sampleName <- strsplit(sampleName,split='/')[[1]]
+sampleName <- sampleName[length(sampleName)]
 countOutputName <- paste0(sampleName,"_proActiv_count.csv")
 write.table(countData, file = countOutputName,
-            sep = "\t", quote = FALSE, row.names = FALSE)
+            sep = ",", quote = FALSE, row.names = FALSE)
