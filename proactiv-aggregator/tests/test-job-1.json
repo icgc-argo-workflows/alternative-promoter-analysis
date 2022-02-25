@@ -1,5 +1,5 @@
 {
-    "input_dir": "input/A549/",
+    "input_directory": "input/A549/",
     "expected_absolute_activity": "expected/A549/absolute_activity.csv",
     "expected_relative_gene_activity": "expected/A549/gene_mean.csv",
     "expected_relative_tx_activity": "expected/A549/transcript_mean.csv",
