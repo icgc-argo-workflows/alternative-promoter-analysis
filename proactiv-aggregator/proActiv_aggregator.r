@@ -34,7 +34,6 @@ csv_list <- list.files(dir, pattern= "*_proActiv_count.csv")
 ##output the following merged matricies for downstream analysis
 outfns <-c("transcript_mean_merged.csv","gene_mean_merged.csv",
            "promoter_class_merged.csv","absolute_activity_merged.csv")
-print(csv_list)
 for (i in 1:length(outfns)){
     for (j in 1:length(csv_list)){
         df <- read.table(file.path(dir,csv_list[j]), header=TRUE, sep=",")
@@ -53,7 +52,6 @@ for (i in 1:length(outfns)){
             merged_df <- merge(merged_df,to_add_col,by="promoterId")
         }
     }
-    merged_outfn <- paste0(dir,outfns[i])
-    write.table(merged_df, file = merged_outfn,
+    write.table(merged_df, file = outfns[i],
                 sep = ",", quote = FALSE, row.names = FALSE)
 }
