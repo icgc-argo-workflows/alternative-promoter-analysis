@@ -48,35 +48,43 @@ params.container_version = ""
 params.container = ""
 
 // tool specific parmas go here, add / change as needed
-params.input_file = ""
-params.expected_output = ""
+params.input_directory = ""
+params.expected_absolute_activity = ""
+params.expected_relative_gene_activity = ""
+params.expected_relative_tx_activity = ""
+params.expected_promoter_class = ""
 
-include { proactivAggregator } from '../main'
+include { proActivAggregator } from '../proActiv_aggregator'
 
 
 process file_smart_diff {
   container "${params.container ?: container[params.container_registry ?: default_container_registry]}:${params.container_version ?: version}"
 
   input:
-    path output_file
-    path expected_file
+    path outputted_absolute_activity
+    path expected_absolute_activity
+    path outputted_relative_gene_activity
+    path expected_relative_gene_activity
+    path outputted_relative_tx_activity
+    path expected_relative_tx_activity
+    path outputted_promoter_class
+    path expected_promoter_class
 
   output:
     stdout()
 
   script:
     """
-    # Note: this is only for demo purpose, please write your own 'diff' according to your own needs.
-    # in this example, we need to remove date field before comparison eg, <div id="header_filename">Tue 19 Jan 2021<br/>test_rg_3.bam</div>
-    # sed -e 's#"header_filename">.*<br/>test_rg_3.bam#"header_filename"><br/>test_rg_3.bam</div>#'
+    diff outputted_absolute_activity expected_absolute_activity \
+      && ( echo "Test PASSED" && exit 0 ) || ( echo "Test FAILED, output file mismatch." && exit 1 )
 
-    cat ${output_file[0]} \
-      | sed -e 's#"header_filename">.*<br/>#"header_filename"><br/>#' > normalized_output
+    diff outputted_relative_gene_activity expected_relative_gene_activity \
+      && ( echo "Test PASSED" && exit 0 ) || ( echo "Test FAILED, output file mismatch." && exit 1 )
 
-    ([[ '${expected_file}' == *.gz ]] && gunzip -c ${expected_file} || cat ${expected_file}) \
-      | sed -e 's#"header_filename">.*<br/>#"header_filename"><br/>#' > normalized_expected
+    diff outputted_relative_tx_activity expected_relative_tx_activity \
+      && ( echo "Test PASSED" && exit 0 ) || ( echo "Test FAILED, output file mismatch." && exit 1 )
 
-    diff normalized_output normalized_expected \
+    diff outputted_promoter_class expected_promoter_class \
       && ( echo "Test PASSED" && exit 0 ) || ( echo "Test FAILED, output file mismatch." && exit 1 )
     """
 }
@@ -84,24 +92,36 @@ process file_smart_diff {
 
 workflow checker {
   take:
-    input_file
-    expected_output
+    input_directory
+    expected_absolute_activity
+    expected_relative_gene_activity
+    expected_relative_tx_activity
+    expected_promoter_class
 
   main:
-    proactivAggregator(
-      input_file
+    proActivAggregator(
+      input_directory
     )
 
     file_smart_diff(
-      proactivAggregator.out.output_file,
-      expected_output
+      proActivAggregator.out.absolute_promoter_usage_csv,
+      expected_absolute_activity,
+      proActivAggregator.out.gene_relative_promoter_usage_csv,
+      expected_relative_gene_activity,
+      proActivAggregator.out.tx_relative_promoter_usage_csv,
+      expected_relative_tx_activity,
+      proActivAggregator.out.promoter_class_csv,
+      expected_promoter_class
     )
 }
 
 
 workflow {
   checker(
-    file(params.input_file),
-    file(params.expected_output)
+    file(params.input_directory),
+    file(params.expected_absolute_activity).
+    file(params.expected_relative_gene_activity),
+    file(params.expected_relative_tx_activity),
+    file(params.expected_promoter_class)
   )
 }
