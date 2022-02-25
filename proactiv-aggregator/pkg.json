@@ -2,7 +2,7 @@
     "name": "proactiv-aggregator",
     "version": "0.1.0",
     "description": "aggregate proActiv outputs",
-    "main": "main.nf",
+    "main": "proActiv_aggregator.nf",
     "deprecated": false,
     "keywords": [
         "aggregator",
@@ -28,7 +28,7 @@
     "contributors": [
         {
             "name": "Yuk Kei Wan",
-            "email": "ywan6@jhu.edu"
+            "email": "wanyk@gis.a-star.edu.sg"
         }
     ],
     "license": "MIT",
