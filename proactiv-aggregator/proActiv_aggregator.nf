@@ -1,4 +1,4 @@
-##!/usr/bin/env nextflow
+#!/usr/bin/env nextflow
 
 /*
   Copyright (c) 2021, Yuk Kei Wan, Genome Institute of Singapore
