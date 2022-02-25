@@ -75,16 +75,16 @@ process file_smart_diff {
 
   script:
     """
-    diff outputted_absolute_activity expected_absolute_activity \
+    diff $outputted_absolute_activity $expected_absolute_activity \
       && ( echo "Test PASSED" && exit 0 ) || ( echo "Test FAILED, output file mismatch." && exit 1 )
 
-    diff outputted_relative_gene_activity expected_relative_gene_activity \
+    diff $outputted_relative_gene_activity $expected_relative_gene_activity \
       && ( echo "Test PASSED" && exit 0 ) || ( echo "Test FAILED, output file mismatch." && exit 1 )
 
-    diff outputted_relative_tx_activity expected_relative_tx_activity \
+    diff $outputted_relative_tx_activity $expected_relative_tx_activity \
       && ( echo "Test PASSED" && exit 0 ) || ( echo "Test FAILED, output file mismatch." && exit 1 )
 
-    diff outputted_promoter_class expected_promoter_class \
+    diff $outputted_promoter_class $expected_promoter_class \
       && ( echo "Test PASSED" && exit 0 ) || ( echo "Test FAILED, output file mismatch." && exit 1 )
     """
 }
