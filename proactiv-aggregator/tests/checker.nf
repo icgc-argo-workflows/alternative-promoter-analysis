@@ -119,7 +119,7 @@ workflow checker {
 workflow {
   checker(
     file(params.input_directory),
-    file(params.expected_absolute_activity).
+    file(params.expected_absolute_activity),
     file(params.expected_relative_gene_activity),
     file(params.expected_relative_tx_activity),
     file(params.expected_promoter_class)
