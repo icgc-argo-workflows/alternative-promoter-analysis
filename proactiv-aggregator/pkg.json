@@ -1,0 +1,37 @@
+{
+    "name": "proactiv-aggregator",
+    "version": "0.1.0",
+    "description": "aggregate proActiv outputs",
+    "main": "proActiv_aggregator.nf",
+    "deprecated": false,
+    "keywords": [
+        "aggregator",
+        "alternative promoters",
+        "bioinformatics"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/icgc-argo-rna-wg/alternative-promoter-analysis.git"
+    },
+    "container": {
+        "registries": [
+            {
+                "registry": "ghcr.io",
+                "type": "docker",
+                "org": "icgc-argo-workflows",
+                "default": true
+            }
+        ]
+    },
+    "dependencies": [],
+    "devDependencies": [],
+    "contributors": [
+        {
+            "name": "Yuk Kei Wan",
+            "email": "wanyk@gis.a-star.edu.sg"
+        }
+    ],
+    "license": "MIT",
+    "bugReport": "https://github.com/icgc-argo-rna-wg/alternative-promoter-analysis/issues",
+    "homepage": "https://github.com/icgc-argo-rna-wg/alternative-promoter-analysis#readme"
+}
