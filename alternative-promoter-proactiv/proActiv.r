@@ -25,24 +25,27 @@ library(proActiv)
 ################################################
 args = commandArgs(trailingOnly=TRUE)
 
-samplesheet   <- strsplit(grep('--samplesheet*', args, value = TRUE), split = '=')[[1]][[2]]
-# annot_gtf      <- strsplit(grep('--annotation*', args, value = TRUE), split = '=')[[1]][[2]]
+junction_file <- strsplit(grep('--junction_file*', args, value = TRUE), split = '=')[[1]][[2]]
+condition     <- strsplit(grep('--condition*', args, value = TRUE), split = '=')[[1]][[2]]
+annotation    <- strsplit(grep('--annotation*', args, value = TRUE), split = '=')[[1]][[2]]
+
 
 ################################################
 ################################################
 ## RUN proActiv                               ##
 ################################################
 ################################################
-sample_tab <- read.csv(samplesheet,header=TRUE)
-files <- sample_tab$input_file
-condition <- sample_tab$condition
-promoterAnnotation <- promoterAnnotation.gencode.v34.subset
-result <- proActiv(files = files, condition = condition,
+promoterAnnotation <- readRDS(annotation)
+result <- proActiv(files = junction_file, condition = condition, 
                    promoterAnnotation = promoterAnnotation)
 result <- result[complete.cases(assays(result)$promoterCounts),]
 result_tab <- rowData(result)
 str(result_tab)
 result_tab$txId <- sapply(result_tab$txId,paste,collapse=";")
 countData <- data.frame(result_tab, assays(result)$promoterCounts)
-write.table(countData, file = "proActiv_count.csv",
-            sep = "\t", quote = FALSE, row.names = FALSE)
+sampleName <- strsplit(junction_file, split = '\\.')[[1]][1]
+sampleName <- strsplit(sampleName,split='/')[[1]]
+sampleName <- sampleName[length(sampleName)]
+countOutputName <- paste0(sampleName,"_proActiv_count.csv")
+write.table(countData, file = countOutputName,
+            sep = ",", quote = FALSE, row.names = FALSE)

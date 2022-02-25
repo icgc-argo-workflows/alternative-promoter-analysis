@@ -1,0 +1,10 @@
+{
+    "publish_dir": "outdir",
+    "junction_file":"input/SJ_inputs_from_proActiv/SGNEx_A549_Illumina_replicate3-run1.subset.SJ.out.tab",
+    "annotation":"input/premade_promoter_annotation/gencode.v34.annotation.gtf.chr1.subset.annotation.rds",
+    "condition":"A549",
+    "container_registry": "ghcr.io",
+    "cpus": 1,
+    "mem": 2,
+    "expected_output": "expected/expected_SGNEx_A549_Illumina_replicate3-run1_proActiv_count.csv"
+}

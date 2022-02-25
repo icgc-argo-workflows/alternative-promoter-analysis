@@ -46,19 +46,23 @@ params.mem = 1  // GB
 params.publish_dir = ""  // set to empty string will disable publishDir
 
 // tool specific parmas go here, add / change as needed
-params.input_file = ""
+params.junction_file = ""
+params.condition     = ""
+params.annotation    = ""
 
 // please update workflow code as needed
-process icgcArgoRnaSeqAlternativePromoterProactiv {
+process proActiv {
   container "${params.container ?: container[params.container_registry ?: default_container_registry]}:${params.container_version ?: version}"
-  publishDir "${params.publish_dir}/${task.process.replaceAll(':', '_')}", mode: "copy", enabled: params.publish_dir
+  publishDir "${params.publish_dir}/${task.process.replaceAll(':', '_')}/$condition", mode: "copy", enabled: params.publish_dir
 
   cpus params.cpus
   memory "${params.mem} GB"
 
   input:
-  path samplesheet
-    
+  path junction_file
+  val  condition
+  path premade_annotation_rds
+
   output:    
   path "*.csv"                , emit: proactiv_csv
   path "proactiv.version.txt" , emit: proactiv_version
@@ -66,7 +70,7 @@ process icgcArgoRnaSeqAlternativePromoterProactiv {
 
   script:
   """
-  /tools/proActiv.r --samplesheet=$samplesheet
+  /tools/proActiv.r --junction_file=$junction_file --condition=$condition --annotation=$premade_annotation_rds
   Rscript -e "library(proActiv); write(x=as.character(packageVersion('proActiv')), file='proactiv.version.txt')"
   echo \$(R --version 2>&1) > r.version.txt
   """
@@ -76,7 +80,9 @@ process icgcArgoRnaSeqAlternativePromoterProactiv {
 // this provides an entry point for this main script, so it can be run directly without clone the repo
 // using this command: nextflow run <git_acc>/<repo>/<pkg_name>/<main_script>.nf -r <pkg_name>.v<pkg_version> --params-file xxx
 workflow {
-  icgcArgoRnaSeqAlternativePromoterProactiv(
-    file(params.input_file)
+  proActiv(
+    file(params.junction_file),
+    params.condition,
+    file(params.annotation)
   )
 }
